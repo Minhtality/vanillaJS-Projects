@@ -34,8 +34,8 @@ function loadEventListeners() {
             li.appendChild(link)
             //shove li into ul 
             taskList.appendChild(li)
-        })
-    })
+        });
+    });
 
     //add to do
     form.addEventListener('submit', event => {
