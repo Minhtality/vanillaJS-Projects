@@ -85,17 +85,46 @@ function loadEventListeners() {
         if (todoAnchor.classList.contains('delete-item')) {
             if (confirm('u sure about this?')) {
                 todoAnchor.parentElement.remove()
+
+                //remove from local storage
+                removeTaskFromLS(todoAnchor.parentElement)
             }
         } else {
             todoAnchor.classList.toggle('strike');
         }
-    })
+    });
+
+    //remove from local storage
+    const removeTaskFromLS = taskItem => {
+        let tasks;
+        if (localStorage.getItem('tasks') === null) {
+            tasks = [];
+        } else {
+            tasks = JSON.parse(localStorage.getItem('tasks'));
+        }
+
+        tasks.forEach((task, index) => {
+            if (taskItem.textContent === task) {
+                tasks.splice(index, 1);
+            }
+
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
     //clear all todos event
     clearBtn.addEventListener('click', () => {
         while (taskList.firstChild) {
             taskList.removeChild(taskList.firstChild);
         }
-    })
+        // call function clear all tasks from local storage
+        clearAllTasks();
+    });
+    // clear all from local storage
+    const clearAllTasks = () => {
+        localStorage.clear();
+    }
+
     //filter thru tasks
     filter.addEventListener('keyup', event => {
         let collectionItems = document.querySelectorAll('.collection-item');
