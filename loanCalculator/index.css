@@ -1,3 +1,7 @@
-body {
-    background: #555;
+#loading {
+    display: none;
+}
+
+#results {
+    display: none;
 }
