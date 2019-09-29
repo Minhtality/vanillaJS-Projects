@@ -1,4 +1,4 @@
-// person constructor
+//person constructor
 function Person(firstName, lastName, dob) {
     this.firstName = firstName;
     this.lastName = lastName;
@@ -39,3 +39,32 @@ Kyle.updateLastName('Tran');
 console.log(Kyle.getFullName());
 
 console.log(customer1);
+/////
+//ES6//
+////
+
+
+
+
+class People {
+    constructor(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    greeting() {
+        return `Hi ${this.firstName} ${this.lastName}`
+    }
+}
+
+class Customer1 extends People {
+    constructor(firstName, lastName, phone, membership) {
+        super(firstName, lastName);
+
+        this.phone = phone;
+        this.membership = membership;
+    }
+}
+
+const Linh = new Customer1('Linh', 'Nguyen', '555-555-5555', 'standard')
+console.log(Linh.greeting())
