@@ -22,11 +22,29 @@ UI.prototype.addBookToList = function (book) {
     list.appendChild(row);
     console.log(row);
 }
+
 UI.prototype.clearFields = function () {
     document.getElementById('title').value = '';
     document.getElementById('author').value = '';
     document.getElementById('isbn').value = '';
 }
+
+UI.prototype.errorAlert = function () {
+    const container = document.querySelector('.container');
+    const bookForm = document.getElementById('book-form');
+    //create div
+    const errorDiv = document.createElement('div');
+    //add class name
+    errorDiv.className = 'error';
+    //insert inner HTML to div
+    errorDiv.innerHTML = `Cannot add empty values, please check inputs`
+    container.insertBefore(errorDiv, bookForm);
+    console.log(errorDiv)
+}
+
+////////////////////
+///END PROTOTYPES///
+////////////////////
 
 //Add event listener
 document.getElementById('book-form').addEventListener('submit', function (event) {
@@ -39,7 +57,15 @@ document.getElementById('book-form').addEventListener('submit', function (event)
     const book = new Book(title, author, isbn);
     //instantiate UI
     const ui = new UI();
-    ui.addBookToList(book)
+
+    //Form Validation
+    if (title === '' || author === '' || isbn === '') {
+        ui.errorAlert();
+    } else {
+        //add input to UI
+        ui.addBookToList(book);
+    }
+
     //clear form fields
     ui.clearFields();
 
