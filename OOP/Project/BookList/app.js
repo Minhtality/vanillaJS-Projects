@@ -29,17 +29,22 @@ UI.prototype.clearFields = function () {
     document.getElementById('isbn').value = '';
 }
 
-UI.prototype.errorAlert = function () {
+UI.prototype.showAlert = function (message, className) {
     const container = document.querySelector('.container');
     const bookForm = document.getElementById('book-form');
     //create div
     const errorDiv = document.createElement('div');
     //add class name
-    errorDiv.className = 'error';
+    errorDiv.className = `alert ${className}`;
     //insert inner HTML to div
-    errorDiv.innerHTML = `Cannot add empty values, please check inputs`
+    errorDiv.appendChild(document.createTextNode(message));
     container.insertBefore(errorDiv, bookForm);
-    console.log(errorDiv)
+
+    //set TimeOut
+    setTimeout(function () {
+        document.querySelector('.alert').remove();
+    }, 2000);
+
 }
 
 ////////////////////
@@ -60,14 +65,17 @@ document.getElementById('book-form').addEventListener('submit', function (event)
 
     //Form Validation
     if (title === '' || author === '' || isbn === '') {
-        ui.errorAlert();
+        ui.showAlert('Please fill in all fields', 'error');
     } else {
         //add input to UI
         ui.addBookToList(book);
+        //clear form fields
+        ui.clearFields();
+        //show alert
+        ui.showAlert('Book added', 'success');
     }
 
-    //clear form fields
-    ui.clearFields();
+
 
     event.preventDefault();
 })
