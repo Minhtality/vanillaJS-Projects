@@ -50,6 +50,8 @@ UI.prototype.showAlert = function (message, className) {
 UI.prototype.deleteBook = function (target) {
     if (target.className === 'delete') {
         target.parentElement.parentElement.remove();
+        //show alert message
+        this.showAlert('Book removed', 'success')
     }
 }
 
@@ -66,6 +68,7 @@ document.getElementById('book-form').addEventListener('submit', function (event)
 
     //instantiate book
     const book = new Book(title, author, isbn);
+
     //instantiate UI
     const ui = new UI();
 
@@ -93,8 +96,5 @@ document.getElementById('book-list').addEventListener('click', function (event) 
 
     //call delete book prototype
     ui.deleteBook(event.target);
-
-    //show alert message
-    ui.showAlert('Book removed', 'success')
     event.preventDefault();
 })
