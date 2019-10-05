@@ -52,7 +52,32 @@ class UI {
         document.getElementById('isbn').value = '';
     }
 }
+//Local storage class
+class Store {
+    static getBooks() {
+        let books;
 
+        if (localStorage.getItem('books') === null) {
+            books = [];
+        } else {
+            books = JSON.parse(localStorage.getItem('books'))
+        }
+        return books;
+    }
+    static displayBooks() {
+        const books = Store.getBooks();
+
+        books.forEach()
+    }
+    static addBook(book) {
+        const books = Store.getBooks();
+        books.push(book);
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+    static removeBook() {
+
+    }
+}
 //Add event listener for adding book
 document.getElementById('book-form').addEventListener('submit', function (event) {
     //grab element values
@@ -72,6 +97,8 @@ document.getElementById('book-form').addEventListener('submit', function (event)
     } else {
         //add input to UI
         ui.addBookToList(book);
+        //add to local storage
+        Store.addBook(book)
         //show alert
         ui.showAlert('Book added', 'success');
         //clear form fields
