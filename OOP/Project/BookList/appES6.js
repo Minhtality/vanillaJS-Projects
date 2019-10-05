@@ -67,17 +67,31 @@ class Store {
     static displayBooks() {
         const books = Store.getBooks();
 
-        books.forEach()
+        books.forEach(book => {
+            const ui = new UI;
+            //add book to list
+            ui.addBookToList(book);
+        });
     }
     static addBook(book) {
         const books = Store.getBooks();
         books.push(book);
         localStorage.setItem('books', JSON.stringify(books));
     }
-    static removeBook() {
+    static removeBook(isbn) {
+        const books = Store.getBooks();
 
+        books.forEach((book, i) => {
+            if (book.isbn === isbn) {
+                books.splice(i, 1);
+            }
+        });
+        localStorage.setItem('books', JSON.stringify(books));
     }
 }
+//add on dom load listeneer
+document.addEventListener('DOMContentLoaded', Store.displayBooks);
+
 //Add event listener for adding book
 document.getElementById('book-form').addEventListener('submit', function (event) {
     //grab element values
@@ -117,7 +131,8 @@ document.getElementById('book-list').addEventListener('click', function (event) 
 
     //call delete book prototype
     ui.deleteBook(event.target);
-
+    //remove book from local storage 
+    Store.removeBook(event.target.parentElement.previousElementSibling.textContent);
 
     event.preventDefault();
 })
